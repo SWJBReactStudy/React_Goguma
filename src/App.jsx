@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Count from './Count';
-import Render from './Render';
+import Count from './Component/Count';
+import Render from './Component/Render';
+import Form from './Component/Form'
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -23,6 +24,7 @@ const App = () => {
       <Count count={count} setCount={setCount}
         onClickPlus={onClickPlus} onClickMinus={onClickMinus} />
       <Render isRender={isRender} setIsRender={setIsRender} />
+      <Form />
     </>
   );
 }
