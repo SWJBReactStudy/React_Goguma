@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Count from './Component/Count';
 import Render from './Component/Render';
 import Form from './Component/Form'
+import Todo from './Component/Todo'
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -21,10 +22,11 @@ const App = () => {
 
   return (
     <>
-      <Count count={count} setCount={setCount}
+      {/* <Count count={count} setCount={setCount}
         onClickPlus={onClickPlus} onClickMinus={onClickMinus} />
       <Render isRender={isRender} setIsRender={setIsRender} />
-      <Form />
+      <Form /> */}
+      <Todo />
     </>
   );
 }
