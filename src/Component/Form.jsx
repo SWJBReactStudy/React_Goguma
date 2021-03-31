@@ -6,22 +6,19 @@ const Form = () => {
     const onChangeStudent = (e) => {
         setStudent({
             ...student,
-            [e.target.name] : e.target.value,
+            [e.target.name] : e.target.value
         });
-    };
+    }
 
     return(
         <div>
-            <label>이름</label>
-            <input name="name" type="text" onChange={onChangeStudent} value={student.name}/>
+            <label>닉네임</label>
+            <input type="text" name="nickname" onChange={onChangeStudent} value={student.nickname} />
             <br/>
-            <label>학번</label>
-            <input name="hakbun" type="text" onChange={onChangeStudent} value={student.hakbun}/>
-            
-            <div>
-                <p>이름 : {student.name}</p>
-                <p>학번 : {student.hakbun}</p>
-            </div>
+            <label>티어</label>
+            <input type="text" name="tier" onChange={onChangeStudent} value={student.tier}/>
+            <div>닉네임 : {student.nickname}</div>
+            <div>티어 : {student.tier}</div>
         </div>
     );
 }
