@@ -2,53 +2,77 @@ import React, { useState } from 'react';
 
 const Todo = () => {
 
-    const [write, setWrite] = useState({
-        title : '',
-        content : ''
-    });
+    const [box, setBox] = useState('');
     const [list, setList] = useState([]);
-    const [num, setNum] = useState(1);
+    const [num, setNum] = useState(0);
 
-    const onChangeWrite = (e) => {
-        setWrite({
-            ...write,
-            [e.target.name] : e.target.value
+    const onChangeTyping = (e) => {
+        setBox({
+            ...box,
+            [e.target.name]: e.target.value,
         });
+
     }
 
-    const onClickAdd = () => {
+    const onClickUpdate = () => {
         setList([
             ...list,
             {
-                title : write.title,
-                content : write.content,
-                id : num
+                title: box.title,
+                content: box.content,
+                id: num
             }
-        ]);
+        ])
         setNum(num + 1);
     }
 
-    const Show = ({list}) => {
+    const onClickDetele = (id) => {
+        setList(
+            list.filter(x => x.id !== id)
+        )
+    }
+
+    const onClickFix = (id) => {
+        const temp = prompt();
+        setList(
+            list.map(x =>
+                x.id === id ?
+                    {
+                        ...x,
+                        content: temp
+                    }
+                    : { ...x }
+            )
+        );
+    }
+
+    const Show = ({ list }) => {
         return (
             <div>
-                <div>{list.title}</div>
-                <div>{list.content}</div>
-                <br/>
+                <div>
+                    <br />
+                    {list.title}
+                    <br />
+                    {list.content}
+                    <br />
+                    <button onClick={() => { onClickDetele(list.id) }}>삭제</button>
+                    <button onClick={() => { onClickFix(list.id) }}>수정</button>
+                </div>
             </div>
         );
     }
 
-    return(
+    return (
         <div>
             <label>제목</label>
-            <input type="text" name="title" onChange={onChangeWrite} value={write.title}/>
-            <br/>
+            <input type="text" name="title" onChange={onChangeTyping} />
+            <br />
             <label>내용</label>
-            <input type="text" name="content" onChange={onChangeWrite} value={write.content}/>
-            <br/>
-            <button onClick={onClickAdd}>추가</button>
-            {list.map((list, i) => (
-                <Show list={list} key={list.id}/>
+            <input type="text" name="content" onChange={onChangeTyping} />
+            <br />
+            <button onClick={onClickUpdate}>추가</button>
+            {list.map(list => (
+                <Show list={list} key={list.id} />
             ))}
         </div>
     );
