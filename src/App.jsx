@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Count from './Component/Count';
 import Render from './Component/Render';
-import Form from './Component/Form'
-import Todo from './Component/Todo'
+import Form from './Component/Form';
+import Todo from './Component/Todo';
+import Effect from './Component/Effect';
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -27,6 +28,8 @@ const App = () => {
       <Render isRender={isRender} setIsRender={setIsRender} />
       <Form /> */}
       <Todo />
+      <br/>
+      <Effect />
     </>
   );
 }
