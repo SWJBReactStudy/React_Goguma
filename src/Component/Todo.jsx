@@ -9,9 +9,8 @@ const Todo = () => {
     const onChangeTyping = (e) => {
         setBox({
             ...box,
-            [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value
         });
-
     }
 
     const onClickUpdate = () => {
@@ -22,27 +21,24 @@ const Todo = () => {
                 content: box.content,
                 id: num
             }
-        ])
+        ]);
         setNum(num + 1);
     }
 
     const onClickDetele = (id) => {
         setList(
             list.filter(x => x.id !== id)
-        )
+        );
     }
 
     const onClickFix = (id) => {
         const temp = prompt();
         setList(
-            list.map(x =>
-                x.id === id ?
-                    {
-                        ...x,
-                        content: temp
-                    }
-                    : { ...x }
-            )
+            list.map(x => x.id === id ?
+                {
+                    ...x,
+                    content: temp
+                } : { ...x })
         );
     }
 
