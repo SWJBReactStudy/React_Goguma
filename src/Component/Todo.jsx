@@ -13,7 +13,7 @@ const Todo = () => {
         });
     }
 
-    const onClickUpdate = () => {
+    const onClickAdd = () => {
         setList([
             ...list,
             {
@@ -21,7 +21,7 @@ const Todo = () => {
                 content: box.content,
                 id: num
             }
-        ]);
+        ])
         setNum(num + 1);
     }
 
@@ -33,27 +33,22 @@ const Todo = () => {
 
     const onClickFix = (id) => {
         const temp = prompt();
-        setList(
-            list.map(x => x.id === id ?
-                {
-                    ...x,
-                    content: temp
-                } : { ...x })
+        setList(list.map(x => x.id === id ?
+            {...x, content : temp} : {...x}
+            )
         );
     }
 
     const Show = ({ list }) => {
         return (
             <div>
-                <div>
-                    <br />
-                    {list.title}
-                    <br />
-                    {list.content}
-                    <br />
-                    <button onClick={() => { onClickDetele(list.id) }}>삭제</button>
-                    <button onClick={() => { onClickFix(list.id) }}>수정</button>
-                </div>
+                <br />
+                {list.title}
+                <br />
+                {list.content}
+                <br />
+                <button onClick={() => onClickDetele(list.id)}>삭제</button>
+                <button onClick={() => onClickFix(list.id)}>수정</button>
             </div>
         );
     }
@@ -66,7 +61,7 @@ const Todo = () => {
             <label>내용</label>
             <input type="text" name="content" onChange={onChangeTyping} />
             <br />
-            <button onClick={onClickUpdate}>추가</button>
+            <button onClick={onClickAdd}>추가</button>
             {list.map(list => (
                 <Show list={list} key={list.id} />
             ))}
