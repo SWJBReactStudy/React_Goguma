@@ -4,6 +4,8 @@ import Render from './Component/Render';
 import Form from './Component/Form';
 import Todo from './Component/Todo';
 import Effect from './Component/Effect';
+import Styled from './Component/Styled';
+import styled from 'styled-components';
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -30,6 +32,8 @@ const App = () => {
       <Todo />
       <br/>
       <Effect />
+      <br/>
+      <Styled />
     </>
   );
 }
