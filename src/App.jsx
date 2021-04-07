@@ -6,6 +6,7 @@ import Todo from './Component/Todo';
 import Effect from './Component/Effect';
 import Styled from './Component/Styled';
 import styled from 'styled-components';
+import UseReducer from './Component/UseReducer';
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -29,11 +30,12 @@ const App = () => {
         onClickPlus={onClickPlus} onClickMinus={onClickMinus} />
       <Render isRender={isRender} setIsRender={setIsRender} />
       <Form /> */}
-      <Todo />
+      {/* <Todo />
       <br/>
       <Effect />
       <br/>
-      <Styled />
+      <Styled /> */}
+      <UseReducer />
     </>
   );
 }
