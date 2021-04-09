@@ -1,127 +1,111 @@
-import React, {useReducer, useState, useRef} from 'react';
+import React, { useReducer, useRef } from 'react';
 
 function reducer(state, action) {
     switch (action.type) {
-        case 'CHANGE_INPUT' :
+        case 'WRITE':
             return {
                 ...state,
-                inputs : {
+                inputs: {
                     ...state.inputs,
-                    [action.name] : action.value
+                    [action.name]: action.value
                 }
             };
-        case 'ADD_TODO' :
+        case 'ADD_TODO':
             return {
-                inputs : initialState.inputs,
-                todos : [
-                    ...state.todos,
-                    action.todos
-                ]
-            };
-        case 'DETELE_TODO' :
+                inputs: initialState.inputs,
+
+                users: [
+                    ...state.users,
+                    {
+                        id: action.id,
+                        title: action.title,
+                        content: action.content
+                    }]
+            }
+        case 'DELETE_TODO':
             return {
                 ...state,
-                todos : state.todos.filter(x => x.id !== action.id)
-            };
-        default :
-            return state;
-    }
-}
+                users : state.users.filter(users => users.id !== action.id)
+            }
+        };
+    };
+
+
 const initialState = {
     inputs: {
-      title: '',
-      content: ''
+        title: '',
+        content: ''
     },
-    todos: [
-       
+    users: [
+
     ]
-}
+};
 
 const UseReducer = () => {
 
     const [state, dispatch] = useReducer(reducer, initialState);
-    const { todos } = state;
+    const { users } = state;
     const { title, content } = state.inputs;
     const nextId = useRef(0);
 
-    const [list, setList] = useState([]);
-
-    const [num, setNum] = useState(1);
-
     const onChangeBox = (e) => {
         const { name, value } = e.target;
-        dispatch(
-            {
-                type: 'CHANGE_INPUT',
-                name,
-                value
-            }
-        );
+        dispatch({
+            type: 'WRITE',
+            name,
+            value
+        });
     }
 
     const onClickList = () => {
-        dispatch(
-            {
-                type: 'ADD_TODO',
-                todos : {
-                    id : nextId.current,
-                    title,
-                    content
-                }
-            }
-        );
+        dispatch({
+            type: 'ADD_TODO',
+            id: nextId.current,
+            title: state.inputs.title,
+            content
+        });
         nextId.current += 1;
     }
 
-    const Show = ({list, onRemove, onFix}) => {
-        return(
+    const Show = ({ list }) => {
+        return (
             <>
-                <div style={{backgroundColor: "gray", color: "pink"}}>
-                    <div>{list.title} <br/> {list.content} </div>
+                <div style={{ backgroundColor: "gray", color: "pink" }}>
+                    <div>{list.title} <br /> {list.content} </div>
                     <button onClick={() => onRemove(list.id)}>삭제</button>
                     <button onClick={() => onFix(list.id)}>수정</button>
                 </div>
-                <br/>
+                <br />
             </>
         );
     }
 
     const onFix = (id) => {
         const temp = prompt();
-        
-        setList(list.map(n => 
-            n.id === id ? {
-                ...n,
-                content : temp
-            } : {...n}
-        )
-    )
-        
+
+
     }
 
     const onRemove = (id) => {
-        dispatch(
-            {
-                type: 'DETELE_TODO',
-                id
-            }
-        );
+        dispatch({
+            type : 'DELETE_TODO',
+            id
+        });
     }
 
-    return(
+    return (
         <div>
             <label>제목</label>
             <input type="text" name="title" onChange={onChangeBox} />
-            <br/>
+            <br />
             <label>내용</label>
-            <input type="text" name="content" onChange={onChangeBox}/>
-            <br/>
+            <input type="text" name="content" onChange={onChangeBox} />
+            <br />
             <button onClick={onClickList}>추가</button>
-            <br/>
+            <br />
             <div>
-            {todos.map(todos => (
-                <Show list={todos} key={todos.id} onRemove={onRemove} onFix={onFix}/>
-            ))}
+                {users.map(list => (
+                    <Show list={list} key={list.id} />))}
             </div>
         </div>
     );
