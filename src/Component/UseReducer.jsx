@@ -2,9 +2,9 @@ import React, { useReducer, useRef } from 'react';
 
 function reducer(state, action) {
     switch (action.type) {
-        case 'WRITE':
+        case 'WRITE_TODO':
             return {
-                ...state,
+                 ...state,
                 inputs: {
                     ...state.inputs,
                     [action.name]: action.value
@@ -12,23 +12,33 @@ function reducer(state, action) {
             };
         case 'ADD_TODO':
             return {
-                inputs: initialState.inputs,
-
-                users: [
-                    ...state.users,
+                inputs: '',
+                todos: [
+                    ...state.todos,
                     {
                         id: action.id,
                         title: action.title,
                         content: action.content
-                    }]
+                    }
+                ]
             }
         case 'DELETE_TODO':
             return {
-                ...state,
-                users : state.users.filter(users => users.id !== action.id)
+                todos : state.todos.filter(x => x.id !== action.id)
             }
-        };
+        case 'FIX_TODO':
+            return {
+                todos : state.todos.map(x =>
+                    x.id === action.id ?
+                    {
+                        ...x,
+                        content : action.temp
+                    } :
+                    {...x}
+                )
+            }
     };
+};
 
 
 const initialState = {
@@ -36,22 +46,21 @@ const initialState = {
         title: '',
         content: ''
     },
-    users: [
+    todos: [
 
     ]
 };
 
 const UseReducer = () => {
 
-    const [state, dispatch] = useReducer(reducer, initialState);
-    const { users } = state;
-    const { title, content } = state.inputs;
+    const [todoList, dispatch] = useReducer(reducer, initialState);
+    const { todos } = todoList;
     const nextId = useRef(0);
 
     const onChangeBox = (e) => {
         const { name, value } = e.target;
         dispatch({
-            type: 'WRITE',
+            type: 'WRITE_TODO',
             name,
             value
         });
@@ -59,10 +68,10 @@ const UseReducer = () => {
 
     const onClickList = () => {
         dispatch({
-            type: 'ADD_TODO',
+            type : 'ADD_TODO',
             id: nextId.current,
-            title: state.inputs.title,
-            content
+            title: todoList.inputs.title,
+            content: todoList.inputs.content
         });
         nextId.current += 1;
     }
@@ -82,13 +91,16 @@ const UseReducer = () => {
 
     const onFix = (id) => {
         const temp = prompt();
-
-
+        dispatch({
+            type : 'FIX_TODO',
+            temp,
+            id
+        });
     }
 
     const onRemove = (id) => {
         dispatch({
-            type : 'DELETE_TODO',
+            type: 'DELETE_TODO',
             id
         });
     }
@@ -104,7 +116,7 @@ const UseReducer = () => {
             <button onClick={onClickList}>추가</button>
             <br />
             <div>
-                {users.map(list => (
+                {todos.map(list => (
                     <Show list={list} key={list.id} />))}
             </div>
         </div>
