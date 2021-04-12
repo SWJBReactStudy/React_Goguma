@@ -25,10 +25,12 @@ function reducer(state, action) {
             }
         case "DELETE_TODO":
             return {
+                ...state,
                 list: state.list.filter(x => x.id !== action.id)
             }
         case "FIX_TODO":
             return {
+                ...state,
                 list: state.list.map(x => x.id === action.id ?
                     {
                         ...x,
@@ -105,10 +107,10 @@ const UseReducer = () => {
     return (
         <div>
             <label>제목</label>
-            <input type="text" name="title" onChange={onChangeTyping} value={todoList.list.title} />
+            <input type="text" name="title" onChange={onChangeTyping} value={todoList.inputs.title} />
             <br />
             <label>내용</label>
-            <input type="text" name="content" onChange={onChangeTyping} value={todoList.list.content} />
+            <input type="text" name="content" onChange={onChangeTyping} value={todoList.inputs.content} />
             <br />
             <button onClick={onClickAdd}>추가</button>
             <br />
