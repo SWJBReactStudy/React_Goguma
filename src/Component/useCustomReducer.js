@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useRef } from 'react';
 
 function reducer(state, action) {
     switch (action.type) {
@@ -51,10 +51,44 @@ const init = {
 
 const useCustomReducer = () => {
     const [todoList, dispatch] = useReducer(reducer, init);
+    const nextId = useRef(0);
 
+    const onChangeTyping = (e) => {
+        const { name, value } = e.target;
+        dispatch({
+            type: "WRITE_TODO",
+            name,
+            value
+        });
+    }
 
+    const onClickAdd = () => {
+        dispatch({
+            type: "ADD_TODO",
+            id: nextId.current,
+            title: todoList.inputs.title,
+            content: todoList.inputs.content
+        });
+        nextId.current += 1;
+    }
 
-    return [todoList, dispatch];
+    const onClickDelete = (id) => {
+        dispatch({
+            type: "DELETE_TODO",
+            id
+        });
+    }
+
+    const onClickFix = (id) => {
+        const temp = prompt();
+        dispatch({
+            type: "FIX_TODO",
+            id,
+            temp
+        });
+    }
+
+    return [todoList, onChangeTyping, onClickAdd, onClickDelete, onClickFix];
 }
 
 

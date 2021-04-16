@@ -1,4 +1,4 @@
-import React, {useRef } from 'react';
+import React, { } from 'react';
 import useCustomReducer from '../Component/useCustomReducer.js';
 
 
@@ -7,44 +7,10 @@ import useCustomReducer from '../Component/useCustomReducer.js';
 
 const UseReducer = () => {
 
-    const nextId = useRef(0);
-    const [todoList, dispatch] = useCustomReducer();
+    const [todoList, onChangeTyping, onClickAdd, onClickDelete, onClickFix] = useCustomReducer();
 
     
-    const onChangeTyping = (e) => {
-        const { name, value } = e.target;
-        dispatch({
-            type: "WRITE_TODO",
-            name,
-            value
-        });
-    }
-
-    const onClickAdd = () => {
-        dispatch({
-            type: "ADD_TODO",
-            id: nextId.current,
-            title: todoList.inputs.title,
-            content: todoList.inputs.content
-        });
-        nextId.current += 1;
-    }
-
-    const onClickDelete = (id) => {
-        dispatch({
-            type: "DELETE_TODO",
-            id
-        });
-    }
-
-    const onClickFix = (id) => {
-        const temp = prompt();
-        dispatch({
-            type: "FIX_TODO",
-            id,
-            temp
-        });
-    }
+    
 
 
     const Show = ({ list }) => {
