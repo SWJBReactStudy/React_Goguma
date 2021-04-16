@@ -35,7 +35,7 @@ const App = () => {
       <Effect />
       <br/>
       <Styled /> */}
-      <UseReducer />
+      <Todo />
     </>
   );
 }
