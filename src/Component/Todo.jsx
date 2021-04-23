@@ -1,33 +1,28 @@
 import React, {useState} from 'react';
+import useInputs from '../Component/useInputs';
 
 const Todo = () => {
-
-    const [box, setBox] = useState({
-        title : '',
-        content : ''
-    });
 
     const [list, setList] = useState([]);
 
     const [num, setNum] = useState(1);
 
-    const onChangeBox = (e) => {
-        setBox({
-            ...box,
-            [e.target.name] : e.target.value
-        });
-    }
+    const [{title, content}, onChangeInputs, reset] = useInputs({
+        title : '',
+        content: ''
+    });
 
     const onClickList = () => {
         setList([
             ...list,
             {
                 id : num,
-                title : box.title,
-                content : box.content,
+                title : title,
+                content : content,
                 flag : true
             }
         ]);
+        reset();
         setNum(num + 1);
     }
 
@@ -64,10 +59,10 @@ const Todo = () => {
     return(
         <div>
             <label>제목</label>
-            <input type="text" name="title" onChange={onChangeBox} value={box.title}/>
+            <input type="text" name="title" onChange={onChangeInputs} value={title}/>
             <br/>
             <label>내용</label>
-            <input type="text" name="content" onChange={onChangeBox} value={box.content}/>
+            <input type="text" name="content" onChange={onChangeInputs} value={content}/>
             <br/>
             <button onClick={onClickList}>추가</button>
             <br/>
